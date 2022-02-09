@@ -34,8 +34,10 @@ def get_metadata(filepath):
             metadata['height'] = int(vcap.get(cv2.CAP_PROP_FRAME_HEIGHT))
             metadata['aspect'] = float(metadata['width'] / metadata['height'])
             vcap.set(cv2.CAP_PROP_POS_AVI_RATIO,1)
-            metadata['duration_ms'] = vcap.get(cv2.CAP_PROP_POS_MSEC)
-            metadata['duration'] = int(metadata['duration_ms']/1000)
+            fps = vcap.get(cv2.CAP_PROP_FPS)
+            frame_count = vcap.get(cv2.CAP_PROP_FRAME_COUNT)
+            metadata['duration_ms'] = int(frame_count/fps)*1000
+            metadata['duration'] = int(frame_count/fps)
             return (True, metadata)
     return (False, metadata)
 
