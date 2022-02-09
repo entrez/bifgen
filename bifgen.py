@@ -56,8 +56,9 @@ def extract_images(metadata, directory, args):
             vcap.set(cv2.CAP_PROP_POS_MSEC, pos * 1000)
             if not args.silent:
                 print('\b' * len(msg) + '\x1B[K', end='')
-                msg = '[{0}%]'.format(int(100 * pos / metadata['duration']))
-                print(msg, end='', flush=True)
+                if not msg == '[{0}%]'.format(int(100 * pos / metadata['duration'])):
+                    msg = '[{0}%]'.format(int(100 * pos / metadata['duration']))
+                    print(msg, end='', flush=True)
             img_count += 1
             success,img = vcap.read()
             if success:
